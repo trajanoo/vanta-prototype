@@ -1,350 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>My Webcrumbs Plugin</title>
-        <style>
-            @import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
-            @import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);
-            @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
-        </style>
-    </head>
-    <body>
-        <div id="webcrumbs">
-            <div class="min-h-screen bg-[#0D0D0D] text-white flex">
-                <div class="w-full md:w-80 lg:w-72 border-r border-neutral-800 p-4 flex flex-col">
-                    <div class="flex items-center justify-between mb-12">
-                        <div class="w-9 h-8">
-                            <img src="vantalogo.png" class="w-full h-full fill-current" alt="">
-                                <path d="M12 2L2 19.5h20L12 2z"></path>
-                            </svg>
-                        </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanta</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="assets/vantalogo.png" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Se quiser garantir que outras fontes não sejam aplicadas em partes específicas */
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Style for project cards */
+        .project-card {
+            background-color: #282828;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .project-card:hover {
+            background-color: #3d3d3d;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="webcrumbs">
+        <div class="min-h-screen bg-[#0D0D0D] text-white flex">
+            <div class="w-full md:w-80 lg:w-72 border-r border-[#161616] p-4 flex flex-col">
+                <div class="flex items-center justify-between mb-12">
+                    <div class="w-14 h-12">
+                        <img src="./assets/vantalogo.png" class="w-full h-full fill-current" alt="">
                     </div>
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm">Pastas</span>
-                            <button
-                                class="w-8 h-8 rounded-full hover:bg-neutral-800 transition-colors flex items-center justify-center"
-                            >
-                                <span class="material-symbols-outlined">add</span>
-                            </button>
-                        </div>
-                        <div class="relative mb-1">
-                            <details class="w-full" open="">
-                                <summary id="academico"
-                                    class="flex items-center justify-between p-2 rounded hover:bg-neutral-800 cursor-pointer list-none"
-                                >
-                                    <div class="flex items-center gap-2">
-                                        <img
-                                            src="256x256bb.jpg"
-                                            alt="Senac logo"
-                                            class="w-8 h-8 rounded"
-                                            keywords="senac, education, brazil"
-                                        />
-                                        <span class="text-sm">Acadêmico</span>
-                                    </div>
-                                    <span class="material-symbols-outlined text-sm transition-transform"
-                                        >expand_more</span
-                                    >
-                                </summary>
-                                <div class="mt-1 ml-2 space-y-1">
-                                    <div
-                                        class="flex items-center p-2 rounded bg-neutral-800 hover:bg-neutral-700 transition-colors"
-                                    >
-                                        <span class="material-symbols-outlined mr-2 text-sm">folder</span>
-                                        <span class="text-sm">Projetos</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">timeline</span>
-                                        <span class="text-sm">Atividade</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">settings</span>
-                                        <span class="text-sm">Configurações</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">payments</span>
-                                        <span class="text-sm">Faturamento</span>
-                                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm">Pastas</span>
+                        <button class="w-8 h-8 rounded-full hover:bg-neutral-800 transition-colors flex items-center justify-center">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                    <div class="relative mb-1">
+                        <details id="details-academico" class="w-full" open="">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-neutral-800 cursor-pointer list-none">
+                                <div class="flex items-center gap-2">
+                                    <img src="./assets/academico.jpg" alt="Senac logo" class="w-8 h-8 rounded" keywords="senac, education, brazil" />
+                                    <span class="text-sm">Acadêmico</span>
                                 </div>
-                            </details>
-                        </div>
-                        <div class="relative mb-1">
-                            <details class="w-full">
-                                <summary id="pessoal"
-                                    class="flex items-center justify-between p-2 rounded hover:bg-neutral-800 cursor-pointer list-none"
-                                >
-                                    <div class="flex items-center gap-2">
-                                        <img
-                                            src="pessoal.png"
-                                            alt="SAP logo"
-                                            class="w-8 h-8 rounded bg-blue-500"
-                                            keywords="sap, enterprise, software"
-                                        />
-                                        <span class="text-sm">Pessoal</span>
-                                    </div>
-                                    <span class="material-symbols-outlined text-sm transition-transform"
-                                        >expand_more</span
-                                    >
-                                </summary>
-                                <div class="mt-1 ml-2 space-y-1">
-                                    <div
-                                        class="flex items-center p-2 rounded bg-neutral-800 hover:bg-neutral-700 transition-colors"
-                                    >
-                                        <span class="material-symbols-outlined mr-2 text-sm">folder</span>
-                                        <span class="text-sm">Projetos</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">timeline</span>
-                                        <span class="text-sm">Atividade</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">settings</span>
-                                        <span class="text-sm">Configurações</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">payments</span>
-                                        <span class="text-sm">Faturamento</span>
-                                    </div>
+                                <span class="material-symbols-outlined text-sm transition-transform">expand_more</span>
+                            </summary>
+                            <div class="mt-1 ml-2 space-y-1">
+                                <div class="flex items-center p-2 rounded bg-neutral-800 hover:bg-neutral-700 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">folder</span>
+                                    <span class="text-sm">Projetos</span>
                                 </div>
-                            </details>
-                        </div>
-                        <div class="relative mb-1">
-                            <details class="w-full">
-                                <summary id="profissional"
-                                    class="flex items-center justify-between p-2 rounded hover:bg-neutral-800 cursor-pointer list-none"
-                                >
-                                    <div class="flex items-center gap-2">
-                                        <img
-                                            src="profissional.png"
-                                            alt="SAP logo"
-                                            class="w-8 h-8 rounded bg-blue-500"
-                                            keywords="sap, enterprise, software"
-                                        />
-                                        <span class="text-sm">Profissional</span>
-                                    </div>
-                                    <span class="material-symbols-outlined text-sm transition-transform"
-                                        >expand_more</span
-                                    >
-                                </summary>
-                                <div class="mt-1 ml-2 space-y-1">
-                                    <div
-                                        class="flex items-center p-2 rounded bg-neutral-800 hover:bg-neutral-700 transition-colors"
-                                    >
-                                        <span class="material-symbols-outlined mr-2 text-sm">folder</span>
-                                        <span class="text-sm">Projetos</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">timeline</span>
-                                        <span class="text-sm">Atividade</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">settings</span>
-                                        <span class="text-sm">Configurações</span>
-                                    </div>
-                                    <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
-                                        <span class="material-symbols-outlined mr-2 text-sm">payments</span>
-                                        <span class="text-sm">Faturamento</span>
-                                    </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">timeline</span>
+                                    <span class="text-sm">Atividade</span>
                                 </div>
-                            </details>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">settings</span>
+                                    <span class="text-sm">Configurações</span>
+                                </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">payments</span>
+                                    <span class="text-sm">Faturamento</span>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="relative mb-1">
+                        <details id="details-pessoal" class="w-full">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-neutral-800 cursor-pointer list-none">
+                                <div class="flex items-center gap-2">
+                                    <img src="./assets/pessoal.png" alt="SAP logo" class="w-8 h-8 rounded bg-blue-500" keywords="sap, enterprise, software" />
+                                    <span class="text-sm">Pessoal</span>
+                                </div>
+                                <span class="material-symbols-outlined text-sm transition-transform">expand_more</span>
+                            </summary>
+                            <div class="mt-1 ml-2 space-y-1">
+                                <div class="flex items-center p-2 rounded bg-neutral-800 hover:bg-neutral-700 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">folder</span>
+                                    <span class="text-sm">Projetos</span>
+                                </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">timeline</span>
+                                    <span class="text-sm">Atividade</span>
+                                </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">settings</span>
+                                    <span class="text-sm">Configurações</span>
+                                </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">payments</span>
+                                    <span class="text-sm">Faturamento</span>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="relative mb-1">
+                        <details id="details-profissional" class="w-full">
+                            <summary class="flex items-center justify-between p-2 rounded hover:bg-neutral-800 cursor-pointer list-none">
+                                <div class="flex items-center gap-2">
+                                    <img src="./assets/profissional.png" alt="SAP logo" class="w-8 h-8 rounded bg-blue-500" keywords="sap, enterprise, software" />
+                                    <span class="text-sm">Profissional</span>
+                                </div>
+                                <span class="material-symbols-outlined text-sm transition-transform">expand_more</span>
+                            </summary>
+                            <div class="mt-1 ml-2 space-y-1">
+                                <div class="flex items-center p-2 rounded bg-neutral-800 hover:bg-neutral-700 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">folder</span>
+                                    <span class="text-sm">Projetos</span>
+                                </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">timeline</span>
+                                    <span class="text-sm">Atividade</span>
+                                </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">settings</span>
+                                    <span class="text-sm">Configurações</span>
+                                </div>
+                                <div class="flex items-center p-2 rounded hover:bg-neutral-800 transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-sm">payments</span>
+                                    <span class="text-sm">Faturamento</span>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 p-6">
+                <div class="flex justify-end items-center mb-8">
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2 rounded-full py-1 px-3">
+                            <img id="imgMain" src="./assets/academico.jpg" alt="Senac logo" class="w-6 h-6 rounded" keywords="senac, education, brazil" />
+                            <span id="pastaHeader" class="text-sm">Acadêmico</span>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors cursor-pointer flex items-center justify-center">
+                            <img src="assets/userfoto.png" alt="">
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 p-6">
-                    <div class="flex justify-end items-center mb-8">
-                        <div class="flex items-center gap-4">
-                            <div class="flex items-center gap-2 rounded-full py-1 px-3">
-                                <img
-                                    src="256x256bb.jpg"
-                                    alt="Senac logo"
-                                    class="w-6 h-6 rounded"
-                                    keywords="senac, education, brazil"
-                                />
-                                <span class="text-sm">Acadêmico</span>
-                            </div>
-                            <div
-                                class="w-8 h-8 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors cursor-pointer flex items-center justify-center"
-                            >
-                                <span class="material-symbols-outlined">person</span>
-                            </div>
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-16 h-16 bg-white rounded-md overflow-hidden flex items-center justify-center">
+                        <img id="imgHeader" src="assets/academico.jpg" alt="Senac logo" class="object-cover" keywords="senac, education, brazil" />
+                    </div>
+                    <div>
+                        <h1 id="title" class="text-xl font-bold">Acadêmico</h1>
+                        <div class="flex items-center gap-1 text-neutral-400 text-sm">
+                            <span class="material-symbols-outlined text-sm">workspace_premium</span>
+                            <span>Free</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 bg-white rounded-lg overflow-hidden flex items-center justify-center">
-                            <img
-                                src="https://cdn.senac.br/media/1425120/logo-senac-share.jpg"
-                                alt="Senac logo"
-                                class="object-cover"
-                                keywords="senac, education, brazil"
-                            />
-                        </div>
-                        <div>
-                            <h1 id="title" class="text-xl font-bold">Senac Inc.</h1>
-                            <div class="flex items-center gap-1 text-neutral-400 text-sm">
-                                <span class="material-symbols-outlined text-sm">workspace_premium</span>
-                                <span>Free</span>
-                            </div>
-                        </div>
+                </div>
+                <div class="border-t border-[#161616] mb-6"></div>
+                <div class="mb-8">
+                    <div class="flex items-center mb-6">
+                        <span class="material-symbols Offerings-outlined mr-2"></span>
+                        <h2 class="text-lg">Seus projetos</h2>
                     </div>
-                    <div class="border-t border-neutral-800 mb-6"></div>
-                    <div class="mb-8">
-                        <div class="flex items-center mb-6">
-                            <span class="material-symbols-outlined mr-2">person</span>
-                            <h2 class="text-lg">Seus projetos</h2>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div
-                                class="bg-neutral-800 p-4 rounded-lg hover:bg-neutral-700 transition-colors flex items-center justify-center cursor-pointer"
-                            >
-                                <span class="material-symbols-outlined text-4xl text-neutral-600">add</span>
-                            </div>
+                    <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <!-- BOTÃO PARA ADICIONAR PROJETO -->
+                        <div id="abrirModal" class="bg-neutral-800 py-10 rounded-md hover:bg-neutral-700 transition-colors flex items-center justify-center cursor-pointer">
+                            <span class="material-symbols-outlined text-4xl text-neutral-600">add</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="script.js"></script>
-        <script>
-            tailwind.config = {
-                content: ["./src/**/*.{html,js}"],
-                theme: {
-                    name: "Bluewave",
-                    fontFamily: {
-                        sans: [
-                            "Open Sans",
-                            "ui-sans-serif",
-                            "system-ui",
-                            "sans-serif",
-                            '"Apple Color Emoji"',
-                            '"Segoe UI Emoji"',
-                            '"Segoe UI Symbol"',
-                            '"Noto Color Emoji"'
-                        ]
-                    },
-                    extend: {
-                        fontFamily: {
-                            title: [
-                                "Lato",
-                                "ui-sans-serif",
-                                "system-ui",
-                                "sans-serif",
-                                '"Apple Color Emoji"',
-                                '"Segoe UI Emoji"',
-                                '"Segoe UI Symbol"',
-                                '"Noto Color Emoji"'
-                            ],
-                            body: [
-                                "Open Sans",
-                                "ui-sans-serif",
-                                "system-ui",
-                                "sans-serif",
-                                '"Apple Color Emoji"',
-                                '"Segoe UI Emoji"',
-                                '"Segoe UI Symbol"',
-                                '"Noto Color Emoji"'
-                            ]
+        
+        <div id="projectModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden transition-opacity duration-300">
+            <div class="bg-[#282828] rounded-sm p-6 w-full max-w-md shadow-lg transform transition-transform duration-300 scale-95">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-title text-white font-bold">Adicionar Novo Projeto</h3>
+                    <button id="fecharModal" class="text-neutral-400 hover:text-neutral-200 transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <div>
+                    <div class="mb-6">
+                        <label for="projectFolder" class="text-neutral-100 block text-sm font-body mb-2">Pasta</label>
+                        <select id="projectFolder" class="w-full p-3 rounded-sm bg-neutral-800 text-white border border-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors">
+                            <option value="academico">Acadêmico</option>
+                            <option value="pessoal">Pessoal</option>
+                            <option value="profissional">Profissional</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label for="projectName" class="text-neutral-100 block text-sm font-body mb-2">Nome do Projeto</label>
+                        <input type="text" id="projectName" class="w-full p-3 rounded-sm bg-neutral-800 text-white border border-neutral-700 focus:outline-none focus:border-neutral-500 transition-colors placeholder-neutral-400" placeholder="Digite o nome do projeto">
+                    </div>
+                    <div class="mb-6">
+                        <label for="projectDescription" class="text-neutral-100 block text-sm font-body mb-2">Descrição</label>
+                        <textarea id="projectDescription" class="w-full p-3 rounded-sm bg-neutral-800 text-white border border-neutral-700 focus:outline-none focus:border-border-neutral-500 transition-colors placeholder-neutral-400" rows="4" placeholder="Descreva o projeto"></textarea>
+                    </div>
+                    <div class="flex justify-end gap-3">
+                        <button id="cancelarModal" class="px-4 py-2 rounded-sm bg-neutral-700 hover:bg-neutral-600 text-white font-body transition-colors">Cancelar</button>
+                        <button id="salvarProjeto" class="px-4 py-2 rounded-sm bg-neutral-500 hover:bg-neutral-400 text-white font-body transition-colors">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        tailwind.config = {
+            content: ["./src/**/*.{html,js}"],
+            theme: {
+                fontFamily: {
+                    sans: [
+                        "Inter",
+                    ]
+                },
+                extend: {
+                    colors: {
+                        neutral: {
+                            50: "#f7f7f7",
+                            100: "#eeeeee",
+                            200: "#e0e0e0",
+                            300: "#cacaca",
+                            400: "#b1b1b1",
+                            500: "#999999",
+                            600: "#7f7f7f",
+                            700: "#676767",
+                            800: "#545454",
+                            900: "#464646",
+                            950: "#282828"
                         },
-                        colors: {
-                            neutral: {
-                                50: "#f7f7f7",
-                                100: "#eeeeee",
-                                200: "#e0e0e0",
-                                300: "#cacaca",
-                                400: "#b1b1b1",
-                                500: "#999999",
-                                600: "#7f7f7f",
-                                700: "#676767",
-                                800: "#545454",
-                                900: "#464646",
-                                950: "#282828"
-                            },
-                            primary: {
-                                50: "#f3f1ff",
-                                100: "#e9e5ff",
-                                200: "#d5cfff",
-                                300: "#b7a9ff",
-                                400: "#9478ff",
-                                500: "#7341ff",
-                                600: "#631bff",
-                                700: "#611bf8",
-                                800: "#4607d0",
-                                900: "#3c08aa",
-                                950: "#220174",
-                                DEFAULT: "#611bf8"
-                            }
+                        primary: {
+                            50: "#f3f1ff",
+                            100: "#e9e5ff",
+                            200: "#d5cfff",
+                            300: "#b7a9ff",
+                            400: "#9478ff",
+                            500: "#7341ff",
+                            600: "#631bff",
+                            700: "#611bf8",
+                            800: "#4607d0",
+                            900: "#3c08aa",
+                            950: "#220174",
+                            DEFAULT: "#611bf8"
                         }
-                    },
-                    fontSize: {
-                        xs: ["12px", {lineHeight: "19.200000000000003px"}],
-                        sm: ["14px", {lineHeight: "21px"}],
-                        base: ["16px", {lineHeight: "25.6px"}],
-                        lg: ["18px", {lineHeight: "27px"}],
-                        xl: ["20px", {lineHeight: "28px"}],
-                        "2xl": ["24px", {lineHeight: "31.200000000000003px"}],
-                        "3xl": ["30px", {lineHeight: "36px"}],
-                        "4xl": ["36px", {lineHeight: "41.4px"}],
-                        "5xl": ["48px", {lineHeight: "52.800000000000004px"}],
-                        "6xl": ["60px", {lineHeight: "66px"}],
-                        "7xl": ["72px", {lineHeight: "75.60000000000001px"}],
-                        "8xl": ["96px", {lineHeight: "100.80000000000001px"}],
-                        "9xl": ["128px", {lineHeight: "134.4px"}]
-                    },
-                    borderRadius: {
-                        none: "0px",
-                        sm: "6px",
-                        DEFAULT: "12px",
-                        md: "18px",
-                        lg: "24px",
-                        xl: "36px",
-                        "2xl": "48px",
-                        "3xl": "72px",
-                        full: "9999px"
-                    },
-                    spacing: {
-                        0: "0px",
-                        1: "4px",
-                        2: "8px",
-                        3: "12px",
-                        4: "16px",
-                        5: "20px",
-                        6: "24px",
-                        7: "28px",
-                        8: "32px",
-                        9: "36px",
-                        10: "40px",
-                        11: "44px",
-                        12: "48px",
-                        14: "56px",
-                        16: "64px",
-                        20: "80px",
-                        24: "96px",
-                        28: "112px",
-                        32: "128px",
-                        36: "144px",
-                        40: "160px",
-                        44: "176px",
-                        48: "192px",
-                        52: "208px",
-                        56: "224px",
-                        60: "240px",
-                        64: "256px",
-                        72: "288px",
-                        80: "320px",
-                        96: "384px",
-                        px: "1px",
-                        0.5: "2px",
-                        1.5: "6px",
-                        2.5: "10px",
-                        3.5: "14px"
                     }
                 },
-                plugins: [],
-                important: "#webcrumbs"
-            }
-        </script>
-    </body>
+                fontSize: {
+                    xs: ["12px", { lineHeight: "19.200000000000003px" }],
+                    sm: ["14px", { lineHeight: "21px" }],
+                    base: ["16px", { lineHeight: "25.6px" }],
+                    lg: ["18px", { lineHeight: "27px" }],
+                    xl: ["20px", { lineHeight: "28px" }],
+                    "2xl": ["24px", { lineHeight: "31.200000000000003px" }],
+                    "3xl": ["30px", { lineHeight: "36px" }],
+                    "4xl": ["36px", { lineHeight: "41.4px" }],
+                    "5xl": ["48px", { lineHeight: "52.800000000000004px" }],
+                    "6xl": ["60px", { lineHeight: "66px" }],
+                    "7xl": ["72px", { lineHeight: "75.60000000000001px" }],
+                    "8xl": ["96px", { lineHeight: "100.80000000000001px" }],
+                    "9xl": ["128px", { lineHeight: "134.4px" }]
+                },
+                borderRadius: {
+                    none: "0px",
+                    sm: "6px",
+                    DEFAULT: "12px",
+                    md: "18px",
+                    lg: "24px",
+                    xl: "36px",
+                    "2xl": "48px",
+                    "3xl": "72px",
+                    full: "9999px"
+                },
+                spacing: {
+                    0: "0px",
+                    1: "4px",
+                    2: "8px",
+                    3: "12px",
+                    4: "16px",
+                    5: "20px",
+                    6: "24px",
+                    7: "28px",
+                    8: "32px",
+                    9: "36px",
+                    10: "40px",
+                    11: "44px",
+                    12: "48px",
+                    14: "56px",
+                    16: "64px",
+                    20: "80px",
+                    24: "96px",
+                    28: "112px",
+                    32: "128px",
+                    36: "144px",
+                    40: "160px",
+                    44: "176px",
+                    48: "192px",
+                    52: "208px",
+                    56: "224px",
+                    60: "240px",
+                    64: "256px",
+                    72: "288px",
+                    80: "320px",
+                    96: "384px",
+                    px: "1px",
+                    0.5: "2px",
+                    1.5: "6px",
+                    2.5: "10px",
+                    3.5: "14px"
+                }
+            },
+            plugins: [],
+            important: "#webcrumbs"
+        }
+
+        // Track the current folder
+        let currentFolder = 'academico';
+        let debounceTimer;
+
+        // Debounce function to prevent multiple rapid calls
+        const debounce = (func, delay) => {
+            return function (...args) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => func.apply(this, args), delay);
+            };
+        };
+
+        // Load projects for the current folder
+        const loadProjects = () => {
+            const existingCards = document.querySelectorAll('.project-card');
+            existingCards.forEach(card => card.remove());
+
+            const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+            // Only set default folder for new projects without folder
+            projects.forEach(project => {
+                if (typeof project.folder === 'undefined') {
+                    project.folder = 'academico';
+                }
+            });
+            localStorage.setItem('projects', JSON.stringify(projects));
+
+            console.log('Current folder:', currentFolder);
+            console.log('Projects:', projects);
+
+            const filteredProjects = projects.filter(project => project.folder === currentFolder);
+            console.log('Filtered projects:', filteredProjects);
+
+            filteredProjects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                projectCard.dataset.projectId = project.id;
+                projectCard.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined">folder</span>
+                        <span class="text-sm">${project.name}</span>
+                    </div>
+                `;
+                projectCard.addEventListener('click', () => {
+                    window.location.href = `kanban.html?projectId=${project.id}`;
+                });
+                document.getElementById('projectsGrid').insertBefore(projectCard, document.getElementById('abrirModal'));
+            });
+        };
+
+        // JavaScript for project creation and navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const title = document.getElementById("title");
+            const pastaHeader = document.getElementById("pastaHeader");
+            const imgMain = document.getElementById("imgMain");
+            const imgHeader = document.getElementById("imgHeader");
+            const abrirModal = document.getElementById('abrirModal');
+            const fecharModal = document.getElementById('fecharModal');
+            const cancelarModal = document.getElementById('cancelarModal');
+            const salvarProjeto = document.getElementById('salvarProjeto');
+            const projectModal = document.getElementById('projectModal');
+            const projectNameInput = document.getElementById('projectName');
+            const projectDescriptionInput = document.getElementById('projectDescription');
+            const projectFolderInput = document.getElementById('projectFolder');
+
+            // Event listeners for folder selection using toggle
+            document.getElementById('details-academico').addEventListener('toggle', (e) => {
+                if (e.target.open) {
+                    title.innerHTML = "Acadêmico";
+                    pastaHeader.innerHTML = "Acadêmico";
+                    imgMain.setAttribute('src', './assets/academico.jpg');
+                    imgHeader.setAttribute('src', './assets/academico.jpg');
+                    currentFolder = 'academico';
+                    debounce(() => loadProjects(), 100)();
+                }
+            });
+
+            document.getElementById('details-pessoal').addEventListener('toggle', (e) => {
+                if (e.target.open) {
+                    title.innerHTML = "Pessoal";
+                    pastaHeader.innerHTML = "Pessoal";
+                    imgMain.setAttribute('src', './assets/pessoal.png');
+                    imgHeader.setAttribute('src', './assets/pessoal.png');
+                    currentFolder = 'pessoal';
+                    debounce(() => loadProjects(), 100)();
+                }
+            });
+
+            document.getElementById('details-profissional').addEventListener('toggle', (e) => {
+                if (e.target.open) {
+                    title.innerHTML = "Profissional";
+                    pastaHeader.innerHTML = "Profissional";
+                    imgMain.setAttribute('src', './assets/profissional.png');
+                    imgHeader.setAttribute('src', './assets/profissional.png');
+                    currentFolder = 'profissional';
+                    debounce(() => loadProjects(), 100)();
+                }
+            });
+
+            abrirModal.addEventListener('click', () => {
+                projectModal.classList.remove('hidden');
+                projectModal.querySelector('.scale-95').classList.remove('scale-95');
+                projectFolderInput.value = currentFolder;
+            });
+
+            const closeModal = () => {
+                projectModal.classList.add('hidden');
+                projectModal.querySelector('.scale-95').classList.add('scale-95');
+                projectNameInput.value = '';
+                projectDescriptionInput.value = '';
+                projectFolderInput.value = currentFolder;
+            };
+
+            fecharModal.addEventListener('click', closeModal);
+            cancelarModal.addEventListener('click', closeModal);
+
+            salvarProjeto.addEventListener('click', () => {
+                const name = projectNameInput.value.trim();
+                const description = projectDescriptionInput.value.trim();
+                const folder = projectFolderInput.value; // Use the selected folder from the modal
+                console.log('Saving project:', { name, description, folder }); // Debug log
+                if (name) {
+                    const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+                    const projectId = Date.now().toString();
+                    const newProject = { id: projectId, name, description, folder };
+                    projects.push(newProject);
+                    localStorage.setItem('projects', JSON.stringify(projects));
+
+                    if (folder === currentFolder) {
+                        const projectCard = document.createElement('div');
+                        projectCard.className = 'project-card';
+                        projectCard.dataset.projectId = projectId;
+                        projectCard.innerHTML = `
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined">folder</span>
+                                <span class="text-sm">${name}</span>
+                            </div>
+                        `;
+                        projectCard.addEventListener('click', () => {
+                            window.location.href = `kanban.html?projectId=${projectId}`;
+                        });
+                        document.getElementById('projectsGrid').insertBefore(projectCard, document.getElementById('abrirModal'));
+                    }
+
+                    closeModal();
+                } else {
+                    alert('Por favor, insira o nome do projeto.');
+                }
+            });
+
+            // Load projects on page load
+            loadProjects();
+        });
+    </script>
+</body>
 </html>
